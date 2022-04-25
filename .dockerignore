@@ -1,0 +1,8 @@
+# Ignore everything
+*.*
+
+# Exept these files
+!api/
+!db_utils/
+!app.py
+!requirements.txt
