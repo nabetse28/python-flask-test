@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restx import Api
-from api.v1.person.controller.person import NS_PERSON
+from api.v1.person.controller.person_controller import NS_PERSON
 from api.v1.status.controller.status import NS_STATUS
 
 app = Flask(__name__)

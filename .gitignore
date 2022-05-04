@@ -150,7 +150,7 @@ dmypy.json
 cython_debug/
 
 # DB
-mongodb/
+mongo_db/
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-import os, logging
+import os
 
 
 class DB_Client:
@@ -11,32 +11,44 @@ class DB_Client:
             "server": os.getenv("MONGO_SERVER", ""),
             "port": os.getenv("MONGO_PORT", 27017),
         }
-        self.connection()
 
     def connection(self):
         try:
-            url = f"mongodb://{self.config['username']}:{self.config['passwords']}@localhost:{self.config['port']}/{self.database}"
-            logging.info("Trying to connect to mongo...")
-            self.db = MongoClient(url)
+            url = f"mongodb://{self.config['username']}:{self.config['password']}@mongo_db:{self.config['port']}"
+            print("Trying to connect to mongo...")
+            return MongoClient(url)
         except Exception as e:
-            logging.info(f"Error: {e}")
+            print(f"Error: {e}")
             return None
 
+    def lookup_unwind_formating(self, lookups):
+        lookups_unwinds_list = []
+        for lookup in lookups:
+            unwind = {
+                "$unwind": {"path": f"${lookup['as']}", "preserveNullAndEmptyArrays": True},
+            }
+            lookup_aux = {"$lookup": lookup}
+            lookups_unwinds_list.append(lookup_aux)
+            lookups_unwinds_list.append(unwind)
+        return lookups_unwinds_list
+
     def insert_one(self, collection, values_dict: dict):
-        if self.db is None:
-            logging.info("Database connection is not working")
+        db = self.connection()[self.database]
+        if db is None:
+            print("Database connection is not working")
             return
-        logging.info("Inserting one record")
-        result = self.db[collection].insert_one(values_dict)
+        print("Inserting one record")
+        result = db[collection].insert_one(values_dict)
         print(result)
         return result
 
     def get_all_data(self, collection, values_dict=dict(), lookups=list()):
-        if self.db is None:
-            logging.info("Database connection is not working")
+        db = self.connection()[self.database]
+        if db is None:
+            print("Database connection is not working")
             return
         lookups_queries = self.lookup_unwind_formating(lookups)
-        return self.db[collection].aggregate(
+        return db[collection].aggregate(
             [
                 *lookups_queries,
                 {"$match": values_dict},
@@ -44,8 +56,9 @@ class DB_Client:
         )
 
     def get_data(self, collection, values_dict=dict(), lookups=list()):
+        db = self.connection()[self.database]
         lookups_queries = self.lookup_unwind_formating(lookups)
-        data = self.db[collection].aggregate(
+        data = db[collection].aggregate(
             [
                 *lookups_queries,
                 {
@@ -57,12 +70,25 @@ class DB_Client:
             ]
         )
         data = list(data)
+        print(data, flush=True)
         if not len(data):
             return None
         return data[0]
 
     def update_data(self, collection, values_dict, update_dict):
-        return self.db[collection].update_one(values_dict, {"$set": update_dict})
+        db = self.connection()[self.database]
+        if db is None:
+            print("Database connection is not working")
+            return
+        return db[collection].update_one(values_dict, {"$set": update_dict})
 
     def delete_data(self, collection, values_dict):
-        return self.db[collection].delete_one(values_dict)
+        db = self.connection()[self.database]
+        if db is None:
+            print("Database connection is not working")
+            return
+        return db[collection].delete_one(values_dict)
+
+
+if __name__ == "__main__":
+    pass
