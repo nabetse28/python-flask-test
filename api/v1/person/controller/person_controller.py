@@ -1,4 +1,4 @@
-from apis.v1.person.service.person_service import Person
+from api.v1.person.service.person_service import Person
 
 from flask_restx import Resource, Namespace
 from flask import request
