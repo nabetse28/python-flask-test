@@ -2,16 +2,16 @@ version: "3"
 
 services:
 
-  # frontend:
-  #   build: 
-  #     dockerfile: Dockerfile.dev
-  #     context: ../UC-FundamentosDevOps-FrontEnd/
-  #   ports:
-  #     - 8090:3000
-  #   links:
-  #     - backend
-  #   depends_on:
-  #     - backend
+  frontend:
+    build: 
+      dockerfile: Dockerfile
+      context: ../UC-FundamentosDevOps-FrontEnd/
+    ports:
+      - 8090:3000
+    links:
+      - backend
+    depends_on:
+      - backend
   backend:
     build:
       context: .

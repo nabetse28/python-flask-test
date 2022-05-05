@@ -1,6 +1,6 @@
 from api.v1.person.service.person_service import Person
 
-from flask_restx import Resource, Namespace
+from flask_restx import Resource, Namespace, cors
 from flask import request
 
 
@@ -13,6 +13,7 @@ class PersonPost(Resource):
     @NS_PERSON.response(code=400, description="Bad request")
     @NS_PERSON.response(code=404, description="Not found")
     @NS_PERSON.response(code=500, description="Internal server error")
+    @cors.crossdomain(origin="*")
     def post(self):
 
         data = request.get_json()
@@ -29,6 +30,7 @@ class PersonPost(Resource):
     @NS_PERSON.response(code=200, description="Success")
     @NS_PERSON.response(code=404, description="Not found")
     @NS_PERSON.response(code=500, description="Internal server error")
+    @cors.crossdomain(origin="*")
     def get(self):
 
         persons = Person.get_all()
@@ -41,6 +43,7 @@ class PersonGetById(Resource):
     @NS_PERSON.response(code=200, description="Success")
     @NS_PERSON.response(code=404, description="Not found")
     @NS_PERSON.response(code=500, description="Internal server error")
+    @cors.crossdomain(origin="*")
     def get(self, id):
         person = Person.get_by_id(id)
 
@@ -52,6 +55,7 @@ class PersonGetById(Resource):
     @NS_PERSON.response(code=200, description="Success")
     @NS_PERSON.response(code=404, description="Not found")
     @NS_PERSON.response(code=500, description="Internal server error")
+    @cors.crossdomain(origin="*")
     def delete(self, id):
         deleted = Person.delete(id)
 
@@ -63,5 +67,6 @@ class PersonGetById(Resource):
     @NS_PERSON.response(code=200, description="Success")
     @NS_PERSON.response(code=404, description="Not found")
     @NS_PERSON.response(code=500, description="Internal server error")
+    @cors.crossdomain(origin="*")
     def patch(self, id):
         return {"message": "A person"}, 200

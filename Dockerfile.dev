@@ -2,9 +2,6 @@ FROM python:3.10.4-alpine3.15
 
 RUN addgroup -S app && adduser -S -G app app
 
-RUN apk add --no-cache \
-    gcc g++ linux-headers python3-dev openssl-dev
-
 WORKDIR /app
 
 COPY . .
@@ -15,4 +12,4 @@ USER app
 
 EXPOSE 5000
 
-CMD [ "uwsgi", "--ini", "./uwsgi.ini" ]
+CMD [ "python", "app.py" ]
