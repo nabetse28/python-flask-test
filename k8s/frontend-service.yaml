@@ -9,8 +9,8 @@ metadata:
 spec:
   selector:
     name: frontend-deployment
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 3000
       targetPort: 3000
-      nodePort: 30090
+      # nodePort: 30090
