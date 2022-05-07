@@ -31,7 +31,7 @@ spec:
                 name: frontend-svc
                 port:
                   number: 3000
-          - path: /api/v1/person?(.*)
+          - path: /api/v1/?(.*)
             # UPDATE PATH
             pathType: Prefix
             # ADD PATHTYPE
