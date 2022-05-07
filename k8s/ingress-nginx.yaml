@@ -17,30 +17,34 @@ spec:
       name: frontend-svc
       port:
         number: 3000
-  rules:
-    - host: myapp.local
-      http:
-        paths:
-          - path: /?(.*)
-            # UPDATE PATH
-            pathType: Prefix
-            # ADD PATHTYPE
-            backend:
-              service:
-                # UPDATE SERVICE FIELDS
-                name: frontend-svc
-                port:
-                  number: 3000
-          - path: /api/v1/?(.*)
-            # UPDATE PATH
-            pathType: Prefix
-            # ADD PATHTYPE
-            backend:
-              service:
-                # UPDATE SERVICE FIELDS
-                name: backend-svc
-                port:
-                  number: 5000
+  # rules:
+  #   # This is used if your api doesn't contain any versioning, e.g,
+  #   # your api path is /person and /status and you don't use
+  #   # /api/v1/person or /api/v1/status. But, if you have a nginx
+  #   # inside the frontend doing this routing you don't need these rules
+  #   - host: myapp.local
+  #     http:
+  #       paths:
+  #         - path: /?(.*)
+  #           # UPDATE PATH
+  #           pathType: Prefix
+  #           # ADD PATHTYPE
+  #           backend:
+  #             service:
+  #               # UPDATE SERVICE FIELDS
+  #               name: frontend-svc
+  #               port:
+  #                 number: 3000
+  #         - path: /api/v1/?(.*)
+  #           # UPDATE PATH
+  #           pathType: Prefix
+  #           # ADD PATHTYPE
+  #           backend:
+  #             service:
+  #               # UPDATE SERVICE FIELDS
+  #               name: backend-svc
+  #               port:
+  #                 number: 5000
 # status:
 #   loadBalancer:
 #     ingress:
