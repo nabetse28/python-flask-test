@@ -14,7 +14,7 @@ class DB_Client:
 
     def connection(self):
         try:
-            url = f"mongodb://{self.config['username']}:{self.config['password']}@mongo_db:{self.config['port']}"
+            url = f"mongodb://{self.config['username']}:{self.config['password']}@{self.config['server']}:{self.config['port']}"
             print("Trying to connect to mongo...")
             return MongoClient(url)
         except Exception as e:
