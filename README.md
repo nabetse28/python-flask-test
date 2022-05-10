@@ -37,5 +37,26 @@ MONGO_SERVER=mongo_db
 ```bash
 docker-compose up --build -d
 ```
-
+NOTE: Make sure to delete the `mongo_db` folder before run this command if the folder is there.
 ### Kubernetes
+1. Enable `k8s` in your `Docker Desktop`.
+2. Create a kubernetes ingress controller with the following command:
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+```
+3. Crete a namespace with the name `myapp`, as follows:
+
+```bash
+kubectl create namespace myapp
+```
+4. Build the docker images for each project and change the name of the image in each `deployment` file.
+
+```bash
+docker build -t <docker_username>/<image_name>:<tag> .
+```
+5. Finally, apply all `k8s` files.
+
+```bash
+cd /python-flask-test
+kubectl apply -f k8s/
+```
