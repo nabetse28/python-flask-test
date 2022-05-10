@@ -60,3 +60,7 @@ docker build -t <docker_username>/<image_name>:<tag> .
 cd /python-flask-test
 kubectl apply -f k8s/
 ```
+
+## Application Design
+
+![](Proyecto.png)
