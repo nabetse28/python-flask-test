@@ -14,10 +14,10 @@ spec:
       tier: frontend
   replicas: 3
   strategy:
+    type: RollingUpdate
     rollingUpdate:
       maxSurge: 25%
       maxUnavailable: 25%
-    type: RollingUpdate
   template:
     metadata:
       labels:
